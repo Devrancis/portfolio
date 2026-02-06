@@ -557,3 +557,45 @@ function showNotification(message, type = 'info') {
         setTimeout(() => notification.remove(), 300);
     }, 5000);
 }
+
+// Touch Gesture Support for Mobile Navigation
+
+let touchStartY = 0;
+let touchEndY = 0;
+const minSwipeDistance = 50; 
+
+
+document.addEventListener('touchstart', (e) => {
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+
+document.addEventListener('touchend', (e) => {
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipeGesture();
+}, { passive: true });
+
+function handleSwipeGesture() {
+    const swipeDistance = touchStartY - touchEndY;
+
+    const homeIndex = 0;
+    const servicesIndex = 1;
+
+    if (currentSectionIndex === homeIndex && swipeDistance > minSwipeDistance) {
+        const homeSection = document.querySelector('.home');
+        
+        const isAtBottom = Math.ceil(homeSection.scrollTop + homeSection.clientHeight) >= homeSection.scrollHeight;
+        
+        if (isAtBottom) {
+            switchSection('services');
+        }
+    }
+
+    if (currentSectionIndex === servicesIndex && swipeDistance < -minSwipeDistance) {
+        const servicesSection = document.querySelector('.services');
+        
+        if (servicesSection.scrollTop <= 5) {
+            switchSection('home');
+        }
+    }
+}
