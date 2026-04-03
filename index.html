@@ -1,23 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="green">
+<html lang="en">
 <head>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; img-src 'self' data: https:; connect-src 'self' https://api.coingecko.com https://api.web3forms.com;">
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <meta name="google-site-verification" content="PCMpOG0nBFRslQRjZ56n90bipZjw4eV8pZzIQR480mo" />
     
     <title>Francis Iyiola | Cyber Security Engineer</title>
-    
-    <meta name="description" content="Francis Iyiola (devrancis) is a Cyber Security Engineer and Full Stack Software Developer in Nigeria. Expert in Penetration testing, Secure Web Development, Malware Analysis, Python & Bash Scripting, Digital Forensics and Incident Response, and Blockchain Security.">
-    <meta name="keywords" content="Francis Iyiola, Devrancis, Software Engineer Nigeria, Cyber Security Engineer, Ethical Hacker, Cybersecurity Specialist, Python Developer, Web3 Developer, Secure Coding, Penetration Tester, Malware Analyst, Digital Forensics, Bug Bounty Hunter">
+    <meta name="description" content="Francis Iyiola (devrancis) is a Cyber Security Engineer and Full Stack Software Developer in Nigeria.">
+    <meta name="keywords" content="Francis Iyiola, Devrancis, Software Engineer Nigeria, Cyber Security Engineer, Ethical Hacker">
     <meta name="author" content="Francis Iyiola">
     <meta name="robots" content="index, follow">
     
     <link rel="canonical" href="https://devrancis.vercel.app">
-
-    <meta property="og:title" content="Francis Iyiola - Cyber Security Engineer, Security-First Software Engineer">
-    <meta property="og:description" content="Building scalable systems with embedded security. View my projects in Cybersecurity, Software Development, and Blockchain Security.">
     
+    <meta property="og:title" content="Francis Iyiola - Cyber Security Engineer">
+    <meta property="og:description" content="Building scalable systems with embedded security.">
     <meta property="og:image" content="https://devrancis.vercel.app/images/propic.jpg">
     <meta property="og:url" content="https://devrancis.vercel.app">
     <meta property="og:type" content="profile">
@@ -25,7 +24,9 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@devrancis">
     <meta name="twitter:creator" content="@devrancis">
-
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -68,15 +69,11 @@
     }
     </script>
 
-    <script>
-        (function() {
-            const savedTheme = localStorage.getItem('portfolio-theme') || 'green';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-        })();
-    </script>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
     <link rel="stylesheet" href="styles.css">
     
     <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
@@ -88,598 +85,324 @@
 </head>
 <body>
 
-    <button class="mobile-nav-toggle">
-        <i class="fas fa-bars"></i>
-        <i class="fas fa-times"></i>
-    </button>
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-    <div class="mobile-nav-dots">
-        <div class="mobile-nav-dot active" data-section="home" title="Home"></div>
-        <div class="mobile-nav-dot" data-section="services" title="Services"></div>
-        <div class="mobile-nav-dot" data-section="portfolio" title="Portfolio"></div>
-        <div class="mobile-nav-dot" data-section="experience" title="Experience"></div>
-        <div class="mobile-nav-dot" data-section="contact" title="Contact"></div>
+<div class="loader" id="loader">
+    <div class="loader-inner">
+        <div class="loader-name">DEVRANCIS<span class="blink">_</span></div>
+        <div class="loader-role">CYBER SECURITY ENGINEER</div>
+        <div class="loader-bar-wrap"><div class="loader-bar-fill" id="loaderFill"></div></div>
+        <div class="loader-pct" id="loaderPct">0%</div>
     </div>
+</div>
 
-    <div class="mobile-nav-menu">
-        <a href="#" class="mobile-nav-link" data-section="home">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="#" class="mobile-nav-link" data-section="services">
-            <i class="fas fa-briefcase"></i>
-            <span>Services</span>
-        </a>
-        <a href="#" class="mobile-nav-link" data-section="portfolio">
-            <i class="fas fa-folder-open"></i>
-            <span>Portfolio</span>
-        </a>
-        <a href="#" class="mobile-nav-link" data-section="experience">
-            <i class="fas fa-graduation-cap"></i>
-            <span>Experience</span>
-        </a>
-        <a href="#" class="mobile-nav-link" data-section="contact">
-            <i class="fas fa-envelope"></i>
-            <span>Contact</span>
-        </a>
-    </div>
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="scanlines"></div>
 
-    <div class="bg-animation"></div>
-
-    <div id="particles"></div>
-
-    <div class="theme-toggle">
-        <button class="theme-btn" data-theme="green" title="Green Dark">
-            <i class="fas fa-leaf"></i>
-        </button>
-        <button class="theme-btn" data-theme="light" title="Light Mode">
-            <i class="fas fa-sun"></i>
-        </button>
-        <button class="theme-btn" data-theme="dark" title="Dark Blue">
-            <i class="fas fa-moon"></i>
-        </button>
-    </div>
-
-    <div class="container showing-home">
-        <nav class="navbar">
-            <div class="nav-indicator"></div>
-            <div class="nav-link active" data-section="home">
-                <i class="fas fa-home"></i>
-                <span class="nav-label">Home</span>
-            </div>
-            <div class="nav-link" data-section="services">
-                <i class="fas fa-briefcase"></i>
-                <span class="nav-label">Services</span>
-            </div>
-            <div class="nav-link" data-section="portfolio">
-                <i class="fas fa-folder-open"></i>
-                <span class="nav-label">Portfolio</span>
-            </div>
-            <div class="nav-link" data-section="experience">
-                <i class="fas fa-graduation-cap"></i>
-                <span class="nav-label">Experience</span>
-            </div>
-            <div class="nav-link" data-section="contact">
-                <i class="fas fa-envelope"></i>
-                <span class="nav-label">Contact</span>
-            </div>
+<header class="navbar" id="navbar">
+    <div class="nav-inner">
+        <a href="#home" class="nav-logo">FR<span>.</span></a>
+        <nav class="nav-links" id="navLinks">
+            <a href="#home"       class="nav-link active">Home</a>
+            <a href="#services"   class="nav-link">Services</a>
+            <a href="#portfolio"  class="nav-link">Portfolio</a>
+            <a href="#experience" class="nav-link">Experience</a>
+            <a href="#contact"    class="nav-link">Contact</a>
         </nav>
-
-        <section class="section home">
-            <div class="home-grid">
-                <div class="profile-section">
-                    <div class="profile-frame">
-                        <div class="profile-glow"></div>
-                        <div class="profile-image">
-                            <img src="images/propic.jpg" alt="Profile">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="home-text">
-                    <div class="greeting">Hello, I'm</div>
-                    <h1 class="main-title">
-                        <span class="typing-text" id="typing-name"></span>
-                    </h1>
-                    <p class="subtitle">
-                        Software Engineer building scalable systems with security embedded throughout.<br>
-                        Security isn't the last step, it's every step.
-                    </p>
-                    <div class="cta-group">
-                        <button class="btn btn-primary" data-section="portfolio">
-                            View Work <i class="fas fa-arrow-right"></i>
-                        </button>
-                        <button class="btn btn-secondary" data-section="contact">
-                            Get In Touch
-                        </button>
-                    </div>
-                    <div class="social-links">
-                        <a href="https://www.github.com/devrancis" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/devrancis" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.x.com/devrancis" target="_blank" rel="noopener noreferrer" class="social-link">
-                            <img src="https://img.icons8.com/?size=100&id=YfCbGWCWcuar&format=png&color=FFFFFF" alt="X" style="width: 20px; height: 20px;">
-                        </a>
-                        <a href="mailto:francisiyiola.fi@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
-                    </div>
-                </div>
+        <div class="nav-right">
+            <div class="theme-toggle">
+                <button class="theme-btn active" data-theme="green" title="Green Dark"><i class="fas fa-leaf"></i></button>
+                <button class="theme-btn" data-theme="dark" title="Dark Blue"><i class="fas fa-moon"></i></button>
             </div>
-        </section>
-
-        <section class="section services">
-            <div style="max-width: 1400px; width: 100%;">
-                <div class="section-header">
-                    <h2 class="section-title">What I Do</h2>
-                    <p class="section-subtitle">Secure software development and cybersecurity services</p>
-                </div>
-
-                <div class="services-grid">
-                    <div class="service-card">
-                        <div class="service-icon">🔒</div>
-                        <h3>Secure Web Development</h3>
-                        <p>Full-stack apps with built-in security (OWASP Top 10 protection, input validation, secure authentication)</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">🕷️</div>
-                        <h3>Web Scraping & Automation</h3>
-                        <p>Legal, ethical scraping solutions with anti-detection techniques</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">🛡️</div>
-                        <h3>Penetration Testing & Security Audits</h3>
-                        <p>Web app pentesting, API security testing, vulnerability assessments</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">📊</div>
-                        <h3>Security Operations & Monitoring</h3>
-                        <p>SIEM setup/management, incident response, threat hunting</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">🔍</div>
-                        <h3>Digital Forensics & Incident Response</h3>
-                        <p>Malware analysis, breach investigation, evidence preservation</p>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-icon">⛓️</div>
-                        <h3>Blockchain & Smart Contract Security</h3>
-                        <p>Secure dApp development, smart contract auditing, Web3 security</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section portfolio">
-            <div style="max-width: 1400px; width: 100%;">
-                <div class="section-header">
-                    <h2 class="section-title">My Work</h2>
-                    <p class="section-subtitle">Recent projects I've worked on</p>
-                </div>
-
-                <div class="filter-tabs">
-                    <div class="filter-tab active" data-filter="all">All Projects</div>
-                    <div class="filter-tab" data-filter="web">Web Apps</div>
-                    <div class="filter-tab" data-filter="web3">Blockchain</div>
-                    <div class="filter-tab" data-filter="security">Cybersecurity</div>
-                    <div class="filter-tab" data-filter="scraping">Web Scraping</div>
-                </div>
-
-                <div class="projects-grid">
-                    <div class="project-card" data-type="web">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">E-Commerce Platform</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Full-stack e-commerce solution with real-time inventory, payment processing, and admin dashboard.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">React</span>
-                                <span class="project-tag">Node.js</span>
-                                <span class="project-tag">MongoDB</span>
-                                <span class="project-tag">Stripe</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="web3">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">DeFi Dashboard</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Decentralized finance platform with wallet integration, token swaps, and portfolio tracking.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Web3</span>
-                                <span class="project-tag">Solidity</span>
-                                <span class="project-tag">Ethereum</span>
-                                <span class="project-tag">Next.js</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="web">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Analytics Dashboard</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Real-time data visualization platform with interactive charts and customizable widgets.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">React</span>
-                                <span class="project-tag">D3.js</span>
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">AWS</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="web3">
-                        <div class="project-image">
-                            <img src="images/nexus-nft.png" alt="Nexus NFT Marketplace" loading="lazy">
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Nexus NFT Marketplace</h3>
-                                <div class="project-links">
-                                    <a href="https://nexus-nft-beta.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="https://github.com/Devrancis/nexus-nft" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Full-featured NFT marketplace on Solana blockchain with minting, trading, and wallet integration.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Solana</span>
-                                <span class="project-tag">Rust</span>
-                                <span class="project-tag">React</span>
-                                <span class="project-tag">Web3.js</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="scraping">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Dynamic Web Scraper</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Advanced web scraping tool with rotating proxies, anti-detection mechanisms, and automated data extraction pipelines.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">BeautifulSoup</span>
-                                <span class="project-tag">Selenium</span>
-                                <span class="project-tag">Scrapy</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="security">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Security Assessment Platform</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Automated penetration testing toolkit for web applications with vulnerability scanning and security report generation.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">Burp Suite</span>
-                                <span class="project-tag">OWASP</span>
-                                <span class="project-tag">Nmap</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="security">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Threat Intelligence Dashboard</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">SIEM-integrated security monitoring dashboard for real-time threat detection, incident tracking, and security analytics.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">React</span>
-                                <span class="project-tag">ELK Stack</span>
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">SIEM</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="security">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Incident Response Platform</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">DFIR workflow management system for breach investigation, malware analysis, and digital evidence preservation.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">Docker</span>
-                                <span class="project-tag">Volatility</span>
-                                <span class="project-tag">Wireshark</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="project-card" data-type="web">
-                        <div class="project-image">
-                            <span style="font-size: 24px; font-weight: 700; color: white;">Coming Soon</span>
-                        </div>
-                        <div class="project-content">
-                            <div class="project-header">
-                                <h3 class="project-title">Learning Platform</h3>
-                                <div class="project-links">
-                                    <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i></a>
-                                    <a href="#" class="project-link"><i class="fab fa-github"></i></a>
-                                </div>
-                            </div>
-                            <p class="project-desc">Online education platform with video courses, quizzes, and progress tracking.</p>
-                            <div class="project-tags">
-                                <span class="project-tag">Vue.js</span>
-                                <span class="project-tag">Laravel</span>
-                                <span class="project-tag">MySQL</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section experience">
-            <div class="experience-content">
-                <div class="section-header">
-                    <h2 class="section-title">Experience</h2>
-                    <p class="section-subtitle">My journey and technologies I work with</p>
-                </div>
-
-                <div class="experience-grid">
-                    <div class="timeline-container">
-                        <div class="timeline">
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <div class="timeline-year">2025 - Present</div>
-                                    <div class="timeline-role">Full stack developer & Cybersecurity Engineer</div>
-                                    <div class="timeline-company">Vectra AI</div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <div class="timeline-year">2023 - 2025</div>
-                                    <div class="timeline-role">Fullstack Developer</div>
-                                    <div class="timeline-company">CipherNest</div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <div class="timeline-year">2023</div>
-                                    <div class="timeline-role">Backend & API specialist</div>
-                                    <div class="timeline-company">Niflare Technologies</div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="timeline-dot"></div>
-                                <div class="timeline-content">
-                                    <div class="timeline-year">2022 - 2023</div>
-                                    <div class="timeline-role">Frontend Developer & Graphics Designer</div>
-                                    <div class="timeline-company">Niflare Technologies</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="tech-stack-container">
-                        <div class="tech-stack-rotating">
-                            <div class="tech-item" style="color: #E44D26;">
-                                <i class="fab fa-html5"></i>
-                                <div class="tech-name">HTML5</div>
-                            </div>
-                            <div class="tech-item" style="color: #1572B6;">
-                                <i class="fab fa-css3-alt"></i>
-                                <div class="tech-name">CSS3</div>
-                            </div>
-                            <div class="tech-item" style="color: #F7DF1E; background: rgba(247, 223, 30, 0.1);">
-                                <i class="fab fa-js"></i>
-                                <div class="tech-name">JavaScript</div>
-                            </div>
-                            <div class="tech-item" style="color: #61DAFB;">
-                                <i class="fab fa-react"></i>
-                                <div class="tech-name">React</div>
-                            </div>
-                            <div class="tech-item" style="color: #00D9FF;">
-                                <i class="fab fa-node-js"></i>
-                                <div class="tech-name">Node.js</div>
-                            </div>
-                            <div class="tech-item" style="color: #3776AB;">
-                                <i class="fab fa-python"></i>
-                                <div class="tech-name">Python</div>
-                            </div>
-                            <div class="tech-item" style="color: #000000;">
-                                <i class="fab fa-github"></i>
-                                <div class="tech-name">Next.js</div>
-                            </div>
-                            <div class="tech-item" style="color: #000000;">
-                                <span style="font-size: 32px; font-weight: bold;">{}</span>
-                                <div class="tech-name">C/C++</div>
-                            </div>
-                            <div class="tech-item" style="color: #FF6B6B;">
-                                <span style="font-size: 28px; font-weight: bold;">🦀</span>
-                                <div class="tech-name">Rust</div>
-                            </div>
-                            <div class="tech-item" style="color: #00ADD8;">
-                                <span style="font-size: 28px; font-weight: bold;">Go</span>
-                                <div class="tech-name">Go</div>
-                            </div>
-                            <div class="tech-item" style="color: #3178C6;">
-                                <span style="font-size: 28px; font-weight: bold;">TS</span>
-                                <div class="tech-name">TypeScript</div>
-                            </div>
-                            <div class="tech-item" style="color: #89E051;">
-                                <i class="fas fa-terminal"></i>
-                                <div class="tech-name">Bash</div>
-                            </div>
-                            <div class="tech-item" style="color: #2496ED;">
-                                <i class="fab fa-docker"></i>
-                                <div class="tech-name">Docker</div>
-                            </div>
-                            <div class="tech-item" style="color: #F05032;">
-                                <i class="fab fa-git-alt"></i>
-                                <div class="tech-name">Git</div>
-                            </div>
-                            <div class="tech-item" style="color: #6E4C13;">
-                                <span style="font-size: 24px; font-weight: bold;">ASM</span>
-                                <div class="tech-name">Assembly</div>
-                            </div>
-                            <div class="tech-item" style="color: #9945FF;">
-                                <img src="https://cryptologos.cc/logos/solana-sol-logo.png" alt="Solana" style="width: 28px; height: 28px; object-fit: contain;">
-                                <div class="tech-name">Solana</div>
-                            </div>
-                            <div class="tech-item" style="color: #627EEA;">
-                                <img src="https://cryptologos.cc/logos/ethereum-eth-logo.png" alt="Ethereum" style="width: 28px; height: 28px; object-fit: contain;">
-                                <div class="tech-name">Ethereum</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section contact">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h2 id="topper">Let's Work<br>Together</h2>
-                    <p id="centralized-text">Have a project in mind or want to collaborate? <br>Feel free to reach out through any of these channels.</p>
-
-                    <div class="contact-methods">
-                        <a href="mailto:francisiyiola.fi@gmail.com" class="contact-method">
-                            <i class="fas fa-envelope"></i>
-                            <div>
-                                <div style="font-weight: 600;">Email</div>
-                                <div style="color: var(--text-dim); font-size: 14px;">francisiyiola.fi@gmail.com</div>
-                            </div>
-                        </a>
-
-                        <a href="https://www.x.com/devrancis" target="_blank" rel="noopener noreferrer" class="contact-method">
-                            <i style="display: flex; align-items: center; justify-content: center;">
-                                <img src="https://img.icons8.com/?size=100&id=YfCbGWCWcuar&format=png&color=FFFFFF" alt="X" style="width: 24px; height: 24px;">
-                            </i>
-                            <div>
-                                <div style="font-weight: 600;">X (Twitter)</div>
-                                <div style="color: var(--text-dim); font-size: 14px;">x.com/devrancis</div>
-                            </div>
-                        </a>
-
-                        <a href="https://www.linkedin.com/in/devrancis" target="_blank" rel="noopener noreferrer" class="contact-method">
-                            <i class="fab fa-linkedin-in"></i>
-                            <div>
-                                <div style="font-weight: 600;">LinkedIn</div>
-                                <div style="color: var(--text-dim); font-size: 14px;">linkedin.com/in/devrancis</div>
-                            </div>
-                        </a>
-
-                        <a href="https://www.github.com/devrancis" target="_blank" rel="noopener noreferrer" class="contact-method">
-                            <i class="fab fa-github"></i>
-                            <div>
-                                <div style="font-weight: 600;">GitHub</div>
-                                <div style="color: var(--text-dim); font-size: 14px;">github.com/devrancis</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <form class="contact-form" id="contact-form" action="https://api.web3forms.com/submit" method="POST">
-
-                        <input type="hidden" name="access_key" value="f31cf3df-d9e0-4dd2-a6e0-6da56214f8a9">
-                        
-                        <input type="checkbox" name="botcheck" class="hidden" style="display: none;" tabindex="-1" autocomplete="off">
-                        <input type="text" name="website" class="hidden" style="display: none;" tabindex="-1" autocomplete="off">
-                        <input type="text" name="confirm_email" class="hidden" style="display: none;" tabindex="-1" autocomplete="off">
-                        
-                        <input type="hidden" name="subject" value="New Contact Form - Portfolio">
-                        
-                        <input type="hidden" name="from_name" value="Portfolio Contact Form">
-
-                        <div class="form-group">
-                            <label class="form-label">Your Name</label>
-                            <input type="text" name="name" class="form-input" placeholder="John Doe" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Your Email</label>
-                            <input type="email" name="email" class="form-input" placeholder="john@example.com" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="form-label">Message</label>
-                            <textarea name="message" class="form-textarea" placeholder="Tell me about your project..." required></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            Send Message <i class="fas fa-paper-plane"></i>
-                        </button>
-                    </form>
-                    <div class="copyright-footer">
-                        <p>&copy; <span id="copyright-year"></span> Francis Iyiola | Full-stack Security Engineer</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <div class="crypto-ticker">
-            <div class="crypto-container">
-                <div class="crypto-track" id="crypto-track"></div>
-            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </div>
+    <div class="scroll-bar" id="scrollBar"></div>
+</header>
 
-    <script src="script.js"></script>
+<!-- Mobile Menu -->
+<div class="mob-menu" id="mobMenu">
+    <button class="mob-close" id="mobClose"><i class="fas fa-times"></i></button>
+    <a href="#home"       class="mob-link"><span>01</span>Home</a>
+    <a href="#services"   class="mob-link"><span>02</span>Services</a>
+    <a href="#portfolio"  class="mob-link"><span>03</span>Portfolio</a>
+    <a href="#experience" class="mob-link"><span>04</span>Experience</a>
+    <a href="#contact"    class="mob-link"><span>05</span>Contact</a>
+</div>
+
+<main id="main">
+
+    <section id="home" class="sec hero-sec">
+        <div class="hero-grid">
+
+            <div class="hero-text">
+                <div class="greeting"><span class="g-line"></span><span>Hello, I'm</span></div>
+                <h1 class="hero-title"><span id="typingName"></span><span class="cursor-blink">_</span></h1>
+                <div class="hero-badge"><span class="bdot"></span>Security-First Engineer · Available for work</div>
+                <p class="hero-sub">Building scalable systems with security embedded throughout.<br>
+                    <em>Security isn't the last step - it's every step.</em></p>
+                <div class="cta-row">
+                    <a href="#portfolio" class="btn btn-primary"><span>View Work</span><i class="fas fa-arrow-right"></i></a>
+                    <a href="#contact"   class="btn btn-ghost"><span>Get In Touch</span></a>
+                </div>
+                <div class="socials">
+                    <a href="https://github.com/devrancis" target="_blank" rel="noopener" class="soc" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/devrancis" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://x.com/devrancis" target="_blank" rel="noopener" class="soc" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+                    <a href="mailto:francisiyiola.fi@gmail.com" class="soc" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="terminal-wrap" id="terminalVisual">
+                    <div class="term-head">
+                        <div class="term-dots"><span></span><span></span><span></span></div>
+                        <div class="term-title">usr@devrancis:~</div>
+                    </div>
+                    
+                    <div class="term-body">
+                        <div class="term-logs term-left" id="logsLeft"></div>
+                        
+                        <div class="term-3d-center" id="canvasContainer">
+                            </div>
+                        
+                        <div class="term-logs term-right" id="logsRight"></div>
+                    </div>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-card"><span class="sn">3+</span><span class="sl">Years</span></div>
+                    <div class="stat-card"><span class="sn">50+</span><span class="sl">Projects</span></div>
+                    <div class="stat-card"><span class="sn">6</span><span class="sl">Services</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="crypto-wrap">
+            <div class="crypto-inner" id="cryptoTrack"></div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="sec">
+        <div class="sec-head">
+            <h2 class="sec-title">Services &amp; <em>Expertise</em></h2>
+            <p class="sec-sub">Secure software development and cybersecurity services</p>
+        </div>
+        <div class="svc-grid">
+            <div class="svc-card reveal"><div class="svc-ico">🔒</div><h3>Secure Web Development</h3><p>Full-stack apps with built-in security — OWASP Top 10 protection, input validation, secure authentication.</p></div>
+            <div class="svc-card reveal"><div class="svc-ico">🕷️</div><h3>Web Scraping &amp; Automation</h3><p>Legal, ethical scraping solutions with anti-detection techniques and automated data pipelines.</p></div>
+            <div class="svc-card reveal"><div class="svc-ico">🛡️</div><h3>Penetration Testing &amp; Audits</h3><p>Web app pentesting, API security testing, vulnerability assessments and detailed reporting.</p></div>
+            <div class="svc-card reveal"><div class="svc-ico">📊</div><h3>Security Operations &amp; Monitoring</h3><p>SIEM setup/management, incident response, threat hunting and continuous monitoring.</p></div>
+            <div class="svc-card reveal"><div class="svc-ico">🔍</div><h3>Digital Forensics &amp; DFIR</h3><p>Malware analysis, breach investigation, evidence preservation and chain-of-custody documentation.</p></div>
+            <div class="svc-card reveal"><div class="svc-ico">⛓️</div><h3>Blockchain &amp; Smart Contract Security</h3><p>Secure dApp development, smart contract auditing, Web3 security and DeFi risk assessment.</p></div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="sec">
+        <div class="sec-head">
+            <h2 class="sec-title">Selected <em>Projects</em></h2>
+            <p class="sec-sub">Recent projects I've worked on</p>
+        </div>
+        <div class="filter-row reveal">
+            <button class="ftab active" data-filter="all">All</button>
+            <button class="ftab" data-filter="web">Web Apps</button>
+            <button class="ftab" data-filter="web3">Blockchain</button>
+            <button class="ftab" data-filter="security">Cybersecurity</button>
+            <button class="ftab" data-filter="scraping">Scraping</button>
+        </div>
+        <div class="proj-grid" id="projGrid">
+
+            <div class="proj-card reveal" data-type="web">
+                <div class="proj-img cs-img"><span>🛒</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>E-Commerce Platform</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>Full-stack e-commerce with real-time inventory, payment processing, and admin dashboard.</p>
+                    <div class="ptags"><span>React</span><span>Node.js</span><span>MongoDB</span><span>Stripe</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="web3">
+                <div class="proj-img cs-img"><span>💹</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>DeFi Dashboard</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>Decentralized finance platform with wallet integration, token swaps, and portfolio tracking.</p>
+                    <div class="ptags"><span>Web3</span><span>Solidity</span><span>Ethereum</span><span>Next.js</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="web">
+                <div class="proj-img cs-img"><span>📊</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Analytics Dashboard</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>Real-time data visualization platform with interactive charts and customizable widgets.</p>
+                    <div class="ptags"><span>React</span><span>D3.js</span><span>Python</span><span>AWS</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="web3">
+                <div class="proj-img"><img src="images/nexus-nft.png" alt="Nexus NFT" loading="lazy"></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Nexus NFT Marketplace</h3><div class="plx"><a href="https://nexus-nft-beta.vercel.app/" target="_blank" rel="noopener" class="pl" data-tooltip="Live Demo"><i class="fas fa-external-link-alt"></i></a><a href="https://github.com/Devrancis/nexus-nft" target="_blank" rel="noopener" class="pl" data-tooltip="Source Code"><i class="fab fa-github"></i></a></div></div>
+                    <p>Full-featured NFT marketplace on Solana blockchain with minting, trading, and wallet integration.</p>
+                    <div class="ptags"><span>Solana</span><span>Rust</span><span>React</span><span>Web3.js</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="scraping">
+                <div class="proj-img cs-img"><span>🕷️</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Dynamic Web Scraper</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>Advanced scraping tool with rotating proxies, anti-detection mechanisms, and automated data extraction pipelines.</p>
+                    <div class="ptags"><span>Python</span><span>BeautifulSoup</span><span>Selenium</span><span>Scrapy</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="security">
+                <div class="proj-img cs-img"><span>🛡️</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Security Assessment Platform</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>Automated penetration testing toolkit with vulnerability scanning and security report generation.</p>
+                    <div class="ptags"><span>Python</span><span>Burp Suite</span><span>OWASP</span><span>Nmap</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="security">
+                <div class="proj-img cs-img"><span>🔍</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Threat Intelligence Dashboard</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>SIEM-integrated security monitoring for real-time threat detection and security analytics.</p>
+                    <div class="ptags"><span>React</span><span>ELK Stack</span><span>Python</span><span>SIEM</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="security">
+                <div class="proj-img cs-img"><span>🔬</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Incident Response Platform</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>DFIR workflow management system for breach investigation, malware analysis, and evidence preservation.</p>
+                    <div class="ptags"><span>Python</span><span>Docker</span><span>Volatility</span><span>Wireshark</span></div>
+                </div>
+            </div>
+
+            <div class="proj-card reveal" data-type="web">
+                <div class="proj-img cs-img"><span>🎓</span><b>Coming Soon</b></div>
+                <div class="proj-body">
+                    <div class="proj-top"><h3>Learning Platform</h3><div class="plx"><a href="#" class="pl"><i class="fas fa-external-link-alt"></i></a><a href="#" class="pl"><i class="fab fa-github"></i></a></div></div>
+                    <p>Online education platform with video courses, quizzes, and progress tracking for developers.</p>
+                    <div class="ptags"><span>Vue.js</span><span>Laravel</span><span>MySQL</span></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="sec">
+        <div class="sec-head">
+            <h2 class="sec-title">Experience &amp; <em>Stack</em></h2>
+            <p class="sec-sub">My journey and the technologies I work with</p>
+        </div>
+        <div class="exp-grid">
+            <div class="timeline reveal">
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card"><div class="tl-yr">2025 — Present</div><div class="tl-role">Full Stack Developer &amp; Cybersecurity Engineer</div><div class="tl-co">Vectra AI</div></div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card"><div class="tl-yr">2023 — 2025</div><div class="tl-role">Fullstack Developer</div><div class="tl-co">CipherNest</div></div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card"><div class="tl-yr">2023</div><div class="tl-role">Backend &amp; API Specialist</div><div class="tl-co">Niflare Technologies</div></div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot"></div>
+                    <div class="tl-card"><div class="tl-yr">2022 — 2023</div><div class="tl-role">Frontend Developer &amp; Graphics Designer</div><div class="tl-co">Niflare Technologies</div></div>
+                </div>
+            </div>
+
+            <div class="tech-box reveal">
+                <p class="tech-label">Tech Stack</p>
+                <div class="tech-grid">
+                    <div class="ti" style="color:#E44D26"><i class="fab fa-html5"></i><span>HTML5</span></div>
+                    <div class="ti" style="color:#1572B6"><i class="fab fa-css3-alt"></i><span>CSS3</span></div>
+                    <div class="ti" style="color:#F7DF1E"><i class="fab fa-js"></i><span>JS</span></div>
+                    <div class="ti" style="color:#61DAFB"><i class="fab fa-react"></i><span>React</span></div>
+                    <div class="ti" style="color:#68A063"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+                    <div class="ti" style="color:#3776AB"><i class="fab fa-python"></i><span>Python</span></div>
+                    <div class="ti" style="color:#aaa"><b>N</b><span>Next.js</span></div>
+                    <div class="ti" style="color:#aaa"><b>{}</b><span>C/C++</span></div>
+                    <div class="ti"><span style="font-size:20px">🦀</span><span>Rust</span></div>
+                    <div class="ti" style="color:#00ADD8"><b>Go</b><span>Go</span></div>
+                    <div class="ti" style="color:#3178C6"><b>TS</b><span>TypeScript</span></div>
+                    <div class="ti" style="color:#89E051"><i class="fas fa-terminal"></i><span>Bash</span></div>
+                    <div class="ti" style="color:#2496ED"><i class="fab fa-docker"></i><span>Docker</span></div>
+                    <div class="ti" style="color:#F05032"><i class="fab fa-git-alt"></i><span>Git</span></div>
+                    <div class="ti" style="color:#aaa"><b style="font-size:9px">ASM</b><span>Assembly</span></div>
+                    <div class="ti" style="color:#9945FF">
+                        <svg width="22" height="22" viewBox="0 0 397.7 311.7" xmlns="http://www.w3.org/2000/svg"><linearGradient id="sol-a" x1="93" y1="314.8" x2="304.7" y2="-4.3" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9945ff"/><stop offset=".91" stop-color="#14f195"/></linearGradient><path fill="url(#sol-a)" d="M64.6 237.9a12 12 0 0 1 8.4-3.5h317.4c5.3 0 7.9 6.4 4.2 10.1l-62.7 62.7a12 12 0 0 1-8.4 3.5H6.1c-5.3 0-7.9-6.4-4.2-10.1zm0-164.3A12 12 0 0 1 73 70h317.4c5.3 0 7.9 6.4 4.2 10.1l-62.7 62.7a12 12 0 0 1-8.4 3.5H6.1c-5.3 0-7.9-6.4-4.2-10.1zm248.3-73.6a12 12 0 0 0-8.4 3.5L41.8 66.2a12 12 0 0 0-3.5 8.4 12 12 0 0 0 3.5 8.5l62.7 62.7a12 12 0 0 0 8.4 3.5h317.4c5.3 0 7.9-6.4 4.2-10.1L325.3 3.5a12 12 0 0 0-8.4-3.5z"/></svg>
+                        <span>Solana</span>
+                    </div>
+                    <div class="ti" style="color:#9945FF">
+                        <svg width="22" height="22" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><g fill="none"><circle cx="16" cy="16" r="16" fill="#627EEA"/><g fill="#fff"><path fill-opacity=".602" d="M16.498 4v8.87l7.497 3.35z"/><path d="M16.498 4L9 16.22l7.498-3.35z"/><path fill-opacity=".602" d="M16.498 21.968v6.027L24 17.616z"/><path d="M16.498 27.995v-6.028L9 17.616z"/><path fill-opacity=".2" d="M16.498 20.573l7.497-4.353-7.497-3.348z"/><path fill-opacity=".602" d="M9 16.22l7.498 4.353v-7.701z"/></g></g></svg>
+                        <span>Ethereum</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="sec">
+        <div class="sec-head">
+            <h2 class="sec-title">Let's Build <em>Together</em></h2>
+            <p class="sec-sub">Have a project in mind? Let's make it happen.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-left reveal">
+                <a href="mailto:francisiyiola.fi@gmail.com" class="cm"><div class="cm-ico"><i class="fas fa-envelope"></i></div><div><b>Email</b><p>francisiyiola.fi@gmail.com</p></div><i class="fas fa-arrow-right"></i></a>
+                <a href="https://x.com/devrancis" target="_blank" rel="noopener" class="cm"><div class="cm-ico"><i class="bi bi-twitter-x"></i> </div><div><b>X (Twitter)</b><p>x.com/devrancis</p></div><i class="fas fa-arrow-right"></i></a>
+                <a href="https://linkedin.com/in/devrancis" target="_blank" rel="noopener" class="cm"><div class="cm-ico"><i class="fab fa-linkedin-in"></i></div><div><b>LinkedIn</b><p>linkedin.com/in/devrancis</p></div><i class="fas fa-arrow-right"></i></a>
+                <a href="https://github.com/devrancis" target="_blank" rel="noopener" class="cm"><div class="cm-ico"><i class="fab fa-github"></i></div><div><b>GitHub</b><p>github.com/devrancis</p></div><i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="contact-right reveal">
+                <form class="cform" id="contactForm">
+                    <input type="hidden" name="access_key" value="f31cf3df-d9e0-4dd2-a6e0-6da56214f8a9">
+                    <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+                    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+                    <input type="hidden" name="subject" value="New Contact Form - Portfolio">
+                    <div class="fg"><label>Your Name</label><input type="text" name="name" placeholder="Gary Lee" required autocomplete="name"></div>
+                    <div class="fg"><label>Your Email</label><input type="email" name="email" placeholder="garylee@gmail.com" required autocomplete="email"></div>
+                    <div class="fg"><label>Message</label><textarea name="message" placeholder="Tell me about your project..." required></textarea></div>
+                    <button type="submit" id="submitBtn" class="btn btn-primary" style="width:100%;justify-content:center">
+                        <span id="btnText">Send Message</span>
+                        <i id="btnIcon" class="fas fa-paper-plane"></i>
+                    </button>
+                    <div id="resultBox" class="result-box" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
+
+        <footer class="site-footer reveal">
+            <p>&copy; <span id="yr"></span> Francis Iyiola | Full-stack Security Engineer</p>
+        </footer>
+    </section>
+
+</main>
+
+<button class="back-top" id="backTop" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
 </body>
 </html>
