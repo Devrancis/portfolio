@@ -769,7 +769,14 @@ img{display:block}
 
     .back-top{ bottom:14px; right:14px; width:38px; height:38px }
 
-    .loader-name{ font-size:clamp(28px,10vw,60px) }
+    .loader-name{
+    font-size:clamp(22px,7vw,76px);
+    word-break:keep-all;
+    white-space:nowrap;
+    overflow:hidden;
+    padding:0 16px;
+    text-align:center;
+    }
 }
 
 @media(max-width:380px){
