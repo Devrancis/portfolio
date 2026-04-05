@@ -668,7 +668,6 @@ img{display:block}
 @media(max-width:1060px){
     .nav-links{ display:none }
     .hamburger{ display:flex }
-    .theme-toggle{ display:none }
 
     #main{ padding-top:var(--nav-h) }
 
