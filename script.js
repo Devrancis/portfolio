@@ -225,25 +225,25 @@ var ftabs = document.querySelectorAll('.ftab');
 var cards = document.querySelectorAll('.proj-card');
 
 function applyFilter(filter) {
-    var idx = 0;
+    var delayIdx = 0;
+    
     cards.forEach(function(card) {
         var show = filter === 'all' || card.dataset.type === filter;
+        
         if (!show) {
-            card.classList.add('hiding');
-            window.setTimeout(function() { card.style.display = 'none'; }, 250);
+            card.style.display = 'none';
+            card.classList.remove('showing');
         } else {
             card.style.display = 'block';
-            card.classList.remove('hiding');
+            
             card.classList.remove('showing');
-            void card.offsetHeight;
+            void card.offsetWidth; 
             card.classList.add('showing');
-            card.style.animationDelay = (idx * 55) + 'ms';
-            idx++;
+            
+            card.style.animationDelay = (delayIdx * 120) + 'ms';
+            delayIdx++;
         }
     });
-    window.setTimeout(function() {
-        cards.forEach(function(c) { c.classList.remove('showing'); });
-    }, 700);
 }
 
 ftabs.forEach(function(t) {
