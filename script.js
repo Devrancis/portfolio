@@ -18,133 +18,6 @@ const pickTheme = function(theme) {
     }
 };
 
-const showThemePicker = function() {
-    // Lock the background scroll while the picker is open
-    document.body.style.overflow = 'hidden';
-
-    const overlay = document.createElement('div');
-    overlay.id = 'themePicker';
-    // Start with opacity 0 so we can fade it in smoothly
-    overlay.style.opacity       = '0'; 
-    overlay.style.transition    = 'opacity 0.5s ease';
-    overlay.style.position      = 'fixed';
-    overlay.style.inset         = '0';
-    overlay.style.zIndex        = '20000';
-    overlay.style.background    = 'rgba(0,0,0,0.88)';
-    overlay.style.backdropFilter= 'blur(14px)';
-    overlay.style.display       = 'flex';
-    overlay.style.alignItems    = 'center';
-    overlay.style.justifyContent= 'center';
-
-    var box = document.createElement('div');
-    box.style.background   = '#0a120a';
-    box.style.border       = '1px solid rgba(0,255,100,.25)';
-    box.style.borderRadius = '20px';
-    box.style.padding      = '44px 40px';
-    box.style.maxWidth     = '420px';
-    box.style.width        = '90%';
-    box.style.textAlign    = 'center';
-
-    var label = document.createElement('div');
-    label.style.fontSize      = '11px';
-    label.style.letterSpacing = '.4em';
-    label.style.color         = '#00ff64';
-    label.style.textTransform = 'uppercase';
-    label.style.marginBottom  = '14px';
-    label.textContent = 'WELCOME';
-
-    var title = document.createElement('h2');
-    title.style.fontSize     = '26px';
-    title.style.fontWeight   = '800';
-    title.style.color        = '#e2ffe2';
-    title.style.marginBottom = '10px';
-    title.textContent = 'Choose your vibe';
-
-    var sub = document.createElement('p');
-    sub.style.fontSize     = '12px';
-    sub.style.color        = '#6e9e6e';
-    sub.style.marginBottom = '32px';
-    sub.style.lineHeight   = '1.7';
-    sub.textContent = 'Pick a theme. You can always change it from the top-right corner.';
-
-    var row = document.createElement('div');
-    row.style.display        = 'flex';
-    row.style.gap            = '14px';
-    row.style.justifyContent = 'center';
-
-    // Green button
-    var btnGreen = document.createElement('button');
-    btnGreen.style.flex         = '1';
-    btnGreen.style.padding      = '18px 12px';
-    btnGreen.style.borderRadius = '14px';
-    btnGreen.style.border       = '1.5px solid rgba(0,255,100,.4)';
-    btnGreen.style.background   = 'rgba(0,255,100,.08)';
-    btnGreen.style.cursor       = 'pointer';
-    btnGreen.style.color        = '#e2ffe2';
-    btnGreen.style.fontFamily   = 'inherit';
-
-    var gEmoji = document.createElement('div');
-    gEmoji.style.fontSize = '26px'; gEmoji.style.marginBottom = '8px';
-    gEmoji.textContent = '🟢';
-    var gTitle = document.createElement('div');
-    gTitle.style.fontWeight = '700'; gTitle.style.fontSize = '14px'; gTitle.style.marginBottom = '4px';
-    gTitle.textContent = 'Green Hacker';
-    var gSub = document.createElement('div');
-    gSub.style.fontSize = '10px'; gSub.style.color = '#6e9e6e'; gSub.style.letterSpacing = '.1em';
-    gSub.textContent = 'Dark & Cyber';
-
-    btnGreen.appendChild(gEmoji);
-    btnGreen.appendChild(gTitle);
-    btnGreen.appendChild(gSub);
-
-    // Blue button
-    var btnDark = document.createElement('button');
-    btnDark.style.flex         = '1';
-    btnDark.style.padding      = '18px 12px';
-    btnDark.style.borderRadius = '14px';
-    btnDark.style.border       = '1.5px solid rgba(0,217,255,.4)';
-    btnDark.style.background   = 'rgba(0,217,255,.08)';
-    btnDark.style.cursor       = 'pointer';
-    btnDark.style.color        = '#e8eeff';
-    btnDark.style.fontFamily   = 'inherit';
-
-    var dEmoji = document.createElement('div');
-    dEmoji.style.fontSize = '26px'; dEmoji.style.marginBottom = '8px';
-    dEmoji.textContent = '🔵';
-    var dTitle = document.createElement('div');
-    dTitle.style.fontWeight = '700'; dTitle.style.fontSize = '14px'; dTitle.style.marginBottom = '4px';
-    dTitle.textContent = 'Blue Techie';
-    var dSub = document.createElement('div');
-    dSub.style.fontSize = '10px'; dSub.style.color = '#7a90b0'; dSub.style.letterSpacing = '.1em';
-    dSub.textContent = 'Dark & Clean';
-
-    btnDark.appendChild(dEmoji);
-    btnDark.appendChild(dTitle);
-    btnDark.appendChild(dSub);
-
-    // Hover effects
-    btnGreen.addEventListener('mouseenter', function() { this.style.background = 'rgba(0,255,100,.18)'; });
-    btnGreen.addEventListener('mouseleave', function() { this.style.background = 'rgba(0,255,100,.08)'; });
-    btnDark.addEventListener('mouseenter',  function() { this.style.background = 'rgba(0,217,255,.18)'; });
-    btnDark.addEventListener('mouseleave',  function() { this.style.background = 'rgba(0,217,255,.08)'; });
-
-    // Click events
-    btnGreen.addEventListener('click', function() { pickTheme('green'); playClick(); });
-    btnDark.addEventListener('click',  function() { pickTheme('dark'); playClick(); });
-
-    row.appendChild(btnGreen);
-    row.appendChild(btnDark);
-    box.appendChild(label);
-    box.appendChild(title);
-    box.appendChild(sub);
-    box.appendChild(row);
-    overlay.appendChild(box);
-    document.body.appendChild(overlay);
-
-    // Trigger the fade-in effect a split second after appending to the DOM
-    window.setTimeout(() => { overlay.style.opacity = '1'; }, 10);
-};
-
 // LOADER
 var loader     = document.getElementById('loader');
 var loaderFill = document.getElementById('loaderFill');
@@ -161,16 +34,10 @@ var loaderTick = setInterval(function() {
         loaderPct.textContent  = '100%';
         
         window.setTimeout(function() {
-            // 1. Check for the theme and fire the pop-up IMMEDIATELY 
-            // before the loader even finishes disappearing.
-            if (!localStorage.getItem('dr-theme')) {
-                showThemePicker();
-            }
-            
-            // 2. Start fading out the loader
+            // 1. Start fading out the loader immediately
             loader.classList.add('out');
             
-            // 3. Remove the loader from the DOM after the fade animation
+            // 2. Remove the loader from the DOM after the fade animation
             window.setTimeout(function() {
                 loader.style.display = 'none';
             }, 700);
