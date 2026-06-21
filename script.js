@@ -6,6 +6,8 @@ const pickTheme = function(theme) {
         b.classList.toggle('active', b.dataset.theme === theme);
     });
     
+    if (window._swapTerminalModel) window._swapTerminalModel(theme);
+
     const picker = document.getElementById('themePicker');
     if (picker) {
         picker.style.opacity = '0';
@@ -355,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
 
 
     // Three.js Artistic Logic 
-    let scene, camera, renderer, skullGroup;
+    let scene, camera, renderer, skullGroup, alienGroup, activeModel;
     let mouseX = 0, mouseY = 0;
     let targetX = 0, targetY = 0;
 
@@ -445,7 +447,17 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
         eyeR.rotation.y = 0.1; // Follow curve of face
         skullGroup.add(eyeR);
 
-        scene.add(skullGroup);
+        alienGroup = buildAlienHead();
+        const currentTheme = localStorage.getItem('dr-theme') || 'green';
+        activeModel = currentTheme === 'white' ? alienGroup : skullGroup;
+        scene.add(activeModel);
+
+        window._swapTerminalModel = function(theme) {
+            if (activeModel) scene.remove(activeModel);
+            activeModel = theme === 'white' ? alienGroup : skullGroup;
+            scene.add(activeModel);
+            activeModel.rotation.set(0, 0, 0);
+        };
 
         const ambientLight = new THREE.AmbientLight(0x111111);
         scene.add(ambientLight);
@@ -503,17 +515,17 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
     function animate() {
         requestAnimationFrame(animate);
 
-        if (skullGroup) {
+        if (activeModel) {
             if (window.innerWidth > 1024) {
-                targetX = mouseX * 0.7; 
+                targetX = mouseX * 0.7;
                 targetY = mouseY * 0.4;
-                skullGroup.rotation.y += (targetX - skullGroup.rotation.y) * 0.08; 
-                skullGroup.rotation.x += (targetY - skullGroup.rotation.x) * 0.08; 
+                activeModel.rotation.y += (targetX - activeModel.rotation.y) * 0.08;
+                activeModel.rotation.x += (targetY - activeModel.rotation.x) * 0.08;
                 
             } else {
-                skullGroup.rotation.x += (0 - skullGroup.rotation.x) * 0.05; 
+                activeModel.rotation.x += (0 - activeModel.rotation.x) * 0.05;
                 
-                skullGroup.rotation.y += 0.008; 
+                activeModel.rotation.y += 0.008;
             }
         }
 
