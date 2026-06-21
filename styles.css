@@ -144,7 +144,7 @@ img{display:block}
     box-shadow:0 4px 30px rgba(0,0,0,.4);
 }
 .nav-inner{
-    max-width:1300px;margin:0 auto;height:var(--nav-h);
+    max-width:clamp(1300px, 90vw, 1600px);margin:0 auto;height:var(--nav-h);
     padding:0 28px;display:flex;align-items:center;gap:32px;
 }
 .nav-logo{
@@ -232,7 +232,7 @@ img{display:block}
 
 .sec{
     min-height:100vh;padding:100px clamp(20px,5vw,80px);
-    max-width:1300px;margin:0 auto;
+    max-width:clamp(1300px, 90vw, 1600px);margin:0 auto;
     display:flex;flex-direction:column;justify-content:center;
 }
 
@@ -950,7 +950,7 @@ input[name="botcheck"],input[name="website"],input[name="confirm_email"]{
 
 /* CYBER TERMINAL STYLES */
 .terminal-wrap {
-    width: 380px;
+    width: min(100%, 480px);
     height: 420px;
     background: #010401; /* Extra dark */
     border: 1px solid var(--bdr2);
@@ -1100,4 +1100,47 @@ input[name="botcheck"],input[name="website"],input[name="confirm_email"]{
     .term-logs { padding: 10px; font-size: 8px;}
     .term-left { padding-right: 55px; }
     .term-right { padding-left: 55px; }
+}
+
+/* LARGE SCREEN OPTIMIZATIONS */
+@media (min-width: 1440px) {
+    .hero-grid { gap: 80px; }
+
+    .profile-wrap { width: 320px; height: 320px; }
+    .profile-hex  { width: 280px; height: 318px; }
+    .r1 { width: 360px; height: 360px; }
+    .r2 { width: 420px; height: 420px; }
+
+    .hero-stats { gap: 16px; }
+    .stat-card  { padding: 16px 24px; min-width: 84px; }
+    .sn         { font-size: 26px; }
+
+    .svc-grid { gap: 24px; }
+    .svc-card { padding: 36px; }
+    .svc-card h3 { font-size: 17px; }
+
+    .proj-grid { gap: 20px; }
+
+    .exp-grid { gap: 72px; }
+    .tl-card  { padding: 26px 32px; }
+    .tl-role  { font-size: 18px; }
+
+    .contact-grid { gap: 60px; }
+    .cform { padding: 36px; }
+}
+
+@media (min-width: 1600px) {
+    .hero-title { font-size: clamp(64px, 5vw, 84px); }
+    .hero-sub   { font-size: 16px; line-height: 1.9; }
+
+    .profile-wrap { width: 340px; height: 340px; }
+    .profile-hex  { width: 300px; height: 341px; }
+    .r1 { width: 380px; height: 380px; }
+    .r2 { width: 440px; height: 440px; }
+
+    .terminal-wrap { height: 460px; }
+
+    .svc-card p { font-size: 13px; }
+
+    .proj-grid { grid-template-columns: repeat(4, 1fr); }
 }
