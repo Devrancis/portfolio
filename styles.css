@@ -1213,7 +1213,7 @@ input[name="botcheck"],input[name="website"],input[name="confirm_email"]{
 }
 
 @media (min-width: 1200px) {
-    .back-top { right: 80px; }
+    .back-top { display: none; }
 }
 
 @media (max-width: 1199px) {
