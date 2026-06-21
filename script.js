@@ -530,6 +530,72 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
     animate();
 });
 
+function buildAlienHead() {
+    const group = new THREE.Group();
+
+    const skin    = new THREE.MeshPhongMaterial({ color: 0x1a2840, specular: 0x2a4a6a, shininess: 90 });
+    const eyeMat  = new THREE.MeshPhongMaterial({ color: 0x00e5cc, emissive: 0x00a08a, emissiveIntensity: 1, shininess: 130 });
+    const glowMat = new THREE.MeshBasicMaterial({ color: 0x00e5cc, transparent: true, opacity: 0.35 });
+    const darkMat = new THREE.MeshPhongMaterial({ color: 0x0d1a26 });
+
+    // Cranium
+    const cranium = new THREE.Mesh(new THREE.SphereGeometry(0.52, 40, 40), skin);
+    cranium.scale.set(0.86, 1.42, 0.76);
+    cranium.position.y = 0.12;
+    group.add(cranium);
+
+    // Jaw
+    const jaw = new THREE.Mesh(new THREE.SphereGeometry(0.36, 32, 32), skin);
+    jaw.scale.set(0.82, 0.55, 0.72);
+    jaw.position.y = -0.5;
+    group.add(jaw);
+
+    // Chin
+    const chin = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.22, 10), skin);
+    chin.position.y = -0.72;
+    chin.rotation.z = Math.PI;
+    group.add(chin);
+
+    // Almond eyes + glow rings
+    [{ x: -0.20, rz: 0.28 }, { x: 0.20, rz: -0.28 }].forEach(function({ x, rz }) {
+        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.13, 24, 24), eyeMat);
+        eye.scale.set(1.75, 0.8, 0.32);
+        eye.position.set(x, 0.10, 0.44);
+        eye.rotation.z = rz;
+        group.add(eye);
+
+        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.025, 8, 24), glowMat);
+        ring.scale.set(1.9, 0.88, 1);
+        ring.position.set(x, 0.10, 0.43);
+        ring.rotation.z = rz;
+        group.add(ring);
+    });
+
+    // Cranial ridges
+    for (let i = 0; i < 5; i++) {
+        const ridge = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 10), skin);
+        ridge.scale.set(0.55, 1.4, 0.55);
+        ridge.position.set((i - 2) * 0.12, 0.70, 0.02);
+        group.add(ridge);
+    }
+
+    // Nostrils
+    [-0.06, 0.06].forEach(function(x) {
+        const nostril = new THREE.Mesh(new THREE.SphereGeometry(0.028, 8, 8), darkMat);
+        nostril.scale.set(0.6, 0.4, 0.5);
+        nostril.position.set(x, -0.22, 0.43);
+        group.add(nostril);
+    });
+
+    // Eye glow lights
+    [-0.20, 0.20].forEach(function(x) {
+        const light = new THREE.PointLight(0x00e5cc, 0.6, 1.2);
+        light.position.set(x, 0.10, 0.6);
+        group.add(light);
+    });
+
+    return group;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
