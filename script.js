@@ -353,8 +353,7 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
         logLine++;
         setTimeout(generateLog, 600 + (Math.sin(logLine * 0.2) * 400));
     }
-    setTimeout(generateLog, 1500); 
-
+    setTimeout(generateLog, 1500);
 
     // --- Three.js Artistic Logic ---
     let scene, camera, renderer, skullGroup;
@@ -372,9 +371,12 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
 
     const lights = {
         eyeLights: [],
+        ambient: null,
         keyLight: null,
+        rimLight: null,
         fillLight: null,
-        backLight: null
+        crownLight: null,
+        frontFill: null
     };
 
     function init3D() {
@@ -528,24 +530,33 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
     }
 
     function setupLighting() {
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
+        lights.ambient = new THREE.AmbientLight(0x0a0f1a, 2.0);
+        scene.add(lights.ambient);
 
-        lights.keyLight = new THREE.PointLight(0xffffff, 2.0, 10);
-        lights.keyLight.position.set(3, 2, 3);
+        lights.keyLight = new THREE.PointLight(0xffffff, 4.0, 14);
+        lights.keyLight.position.set(3.5, 2.5, 4.0);
         scene.add(lights.keyLight);
 
-        lights.fillLight = new THREE.PointLight(0x00aacc, 1.5, 8);
-        lights.fillLight.position.set(-3, -1, 2);
+        lights.rimLight = new THREE.PointLight(0x00aaff, 3.5, 10);
+        lights.rimLight.position.set(-3.5, 2.0, -3.0);
+        scene.add(lights.rimLight);
+
+        lights.fillLight = new THREE.PointLight(0x00ff64, 2.0, 9);
+        lights.fillLight.position.set(-3.0, -2.0, 2.5);
         scene.add(lights.fillLight);
 
-        lights.backLight = new THREE.PointLight(0x0044ff, 3, 10);
-        lights.backLight.position.set(0, 3, -4);
-        scene.add(lights.backLight);
+        lights.crownLight = new THREE.PointLight(0x00d9ff, 2.5, 10);
+        lights.crownLight.position.set(0.5, 4.0, -3.5);
+        scene.add(lights.crownLight);
+
+        lights.frontFill = new THREE.PointLight(0xffffff, 0.6, 7);
+        lights.frontFill.position.set(0, 0.5, 5.0);
+        scene.add(lights.frontFill);
     }
 
     function applyThemeColors(theme) {
         if (theme === 'white') {
+            // Pristine Silver/White Theme 
             materials.shell.color.setHex(0xe0e5ec);
             materials.panel.color.setHex(0xcfd6e0);
             materials.accent.color.setHex(0x0055ff);
@@ -556,10 +567,18 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
             materials.glow.color.setHex(0x0044ff);
 
             lights.eyeLights.forEach(l => l.color.setHex(0x0066ff));
+            
+            // Adjust lights for a bright environment (cooler, softer blues)
+            lights.ambient.color.setHex(0xffffff);
+            lights.ambient.intensity = 1.5;
+            lights.keyLight.intensity = 2.5; 
+            lights.rimLight.color.setHex(0x0055ff);
             lights.fillLight.color.setHex(0x0022aa);
-            lights.backLight.color.setHex(0xaaccff);
-            lights.keyLight.intensity = 1.2; 
+            lights.crownLight.color.setHex(0xaaccff);
+            lights.frontFill.intensity = 1.0;
+
         } else {
+            // Stealth Carbon Theme (Your Cinematic Setup)
             materials.shell.color.setHex(0x0c1118);
             materials.panel.color.setHex(0x141c28);
             materials.accent.color.setHex(0x00aacc);
@@ -570,9 +589,15 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
             materials.glow.color.setHex(0x0099cc);
 
             lights.eyeLights.forEach(l => l.color.setHex(0x00e8ff));
-            lights.fillLight.color.setHex(0x00aacc);
-            lights.backLight.color.setHex(0x0044ff);
-            lights.keyLight.intensity = 2.0; 
+            
+            // Restore your exact lighting hexes
+            lights.ambient.color.setHex(0x0a0f1a);
+            lights.ambient.intensity = 2.0;
+            lights.keyLight.intensity = 4.0;
+            lights.rimLight.color.setHex(0x00aaff);
+            lights.fillLight.color.setHex(0x00ff64);
+            lights.crownLight.color.setHex(0x00d9ff);
+            lights.frontFill.intensity = 0.6;
         }
     }
 
