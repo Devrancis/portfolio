@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
         console.warn("Terminal visual or Three.js missing."); return;
     }
 
-    // Coordinated Text Log Generator
+    // --- Coordinated Text Log Generator ---
     let logLine = 0;
     const securityMessages = [
         `[${new Date().toLocaleTimeString()}] **Initializing security audit...**`,
@@ -353,13 +353,29 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
         logLine++;
         setTimeout(generateLog, 600 + (Math.sin(logLine * 0.2) * 400));
     }
-    setTimeout(generateLog, 1500); // Start text after delay
+    setTimeout(generateLog, 1500); 
 
 
-    // Three.js Artistic Logic 
-    let scene, camera, renderer, skullGroup, alienGroup, activeModel;
+    // --- Three.js Artistic Logic ---
+    let scene, camera, renderer, skullGroup;
     let mouseX = 0, mouseY = 0;
     let targetX = 0, targetY = 0;
+
+    const materials = {
+        shell: new THREE.MeshStandardMaterial({ color: 0x0c1118, roughness: 0.15, metalness: 0.85 }),
+        panel: new THREE.MeshStandardMaterial({ color: 0x141c28, roughness: 0.25, metalness: 0.80 }),
+        accent: new THREE.MeshStandardMaterial({ color: 0x00aacc, roughness: 0.1, metalness: 1.0, emissive: 0x002233, emissiveIntensity: 0.8 }),
+        eye: new THREE.MeshBasicMaterial({ color: 0x00e8ff }),
+        eyeCore: new THREE.MeshBasicMaterial({ color: 0x88ffff }),
+        glow: new THREE.MeshBasicMaterial({ color: 0x0099cc, transparent: true, opacity: 0.25 })
+    };
+
+    const lights = {
+        eyeLights: [],
+        keyLight: null,
+        fillLight: null,
+        backLight: null
+    };
 
     function init3D() {
         scene = new THREE.Scene();
@@ -367,138 +383,211 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
         const width = container.clientWidth;
         const height = container.clientHeight;
         camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-        camera.position.z = 3.2; // Pulled back slightly for the larger helmet
+        camera.position.z = 3.5;
 
-        // Setup Renderer
         renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); 
         renderer.setSize(width, height);
-        
         renderer.domElement.style.opacity = "0";
         renderer.domElement.style.transition = "opacity 0.8s ease-in-out";
-
         container.appendChild(renderer.domElement);
 
-        skullGroup = new THREE.Group(); 
-        
-        //Dark Helmet Shell (Charcoal Metal)
-        const shellMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x111316,     
-            roughness: 0.3,     
-            metalness: 0.8,      
-        });
+        buildHelmet();
+        setupLighting();
 
-        // The Faceplate (Muted Cyber-Gold/Bronze)
-        const faceplateMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x8a6d3b,      
-            roughness: 0.25,     
-            metalness: 0.9,      
-        });
-
-        // The Glowing Eyes (Neon Cyan)
-        const eyeMaterial = new THREE.MeshBasicMaterial({ 
-            color: 0x00d9ff 
-        });
-
-        // Main Helmet Dome
-        const domeGeo = new THREE.SphereGeometry(1.05, 32, 32);
-        const domeMesh = new THREE.Mesh(domeGeo, shellMaterial);
-        skullGroup.add(domeMesh);
-
-        // Lower Helmet 
-        const jawGuardGeo = new THREE.BoxGeometry(1.4, 0.8, 1);
-        const jawGuardMesh = new THREE.Mesh(jawGuardGeo, shellMaterial);
-        jawGuardMesh.position.set(0, -0.6, 0.2);
-        skullGroup.add(jawGuardMesh);
-
-        // Ear Hinges 
-        const hingeGeo = new THREE.CylinderGeometry(0.25, 0.25, 2.15, 16);
-        const hingeMesh = new THREE.Mesh(hingeGeo, shellMaterial);
-        hingeMesh.rotation.z = Math.PI / 2; // Lay flat across X axis
-        hingeMesh.position.set(0, -0.3, 0.2);
-        skullGroup.add(hingeMesh);
-
-        // The Gold Faceplate 
-        const faceGeo = new THREE.CylinderGeometry(0.85, 0.35, 1.45, 6);
-        const faceMesh = new THREE.Mesh(faceGeo, faceplateMaterial);
-        faceMesh.scale.set(1, 1, 0.45); // Flatten it into a mask shape
-        faceMesh.position.set(0, -0.3, 0.82); // Push it to the front
-        faceMesh.rotation.y = Math.PI / 6; // Rotate so a flat edge faces perfectly forward
-        skullGroup.add(faceMesh);
-
-        // Forehead Cutout 
-        const cutoutGeo = new THREE.BoxGeometry(0.75, 0.4, 0.6);
-        const cutoutMesh = new THREE.Mesh(cutoutGeo, shellMaterial);
-        cutoutMesh.position.set(0, 0.45, 0.95); // Overlaps the top of the gold faceplate
-        skullGroup.add(cutoutMesh);
-
-        // Glowing Eyes 
-        const eyeGeo = new THREE.BoxGeometry(0.35, 0.08, 0.1);
-        
-        const eyeL = new THREE.Mesh(eyeGeo, eyeMaterial);
-        eyeL.position.set(-0.32, 0.08, 1.05); // Placed on the faceplate
-        eyeL.rotation.z = 0.15; // Slant down towards center
-        eyeL.rotation.y = -0.1; // Follow curve of face
-        skullGroup.add(eyeL);
-
-        const eyeR = new THREE.Mesh(eyeGeo, eyeMaterial);
-        eyeR.position.set(0.32, 0.08, 1.05);
-        eyeR.rotation.z = -0.15; // Slant down towards center
-        eyeR.rotation.y = 0.1; // Follow curve of face
-        skullGroup.add(eyeR);
-
-        alienGroup = buildAlienHead();
         const currentTheme = localStorage.getItem('dr-theme') || 'green';
-        activeModel = currentTheme === 'white' ? alienGroup : skullGroup;
-        scene.add(activeModel);
+        applyThemeColors(currentTheme);
 
         window._swapTerminalModel = function(theme) {
-            if (activeModel) scene.remove(activeModel);
-            activeModel = theme === 'white' ? alienGroup : skullGroup;
-            scene.add(activeModel);
-            activeModel.rotation.set(0, 0, 0);
+            applyThemeColors(theme);
         };
-
-        const ambientLight = new THREE.AmbientLight(0x111111);
-        scene.add(ambientLight);
-
-        const keyLight = new THREE.PointLight(0xffffff, 2.5, 10);
-        keyLight.position.set(3, 2, 3);
-        scene.add(keyLight);
-
-        const fillLight = new THREE.PointLight(0x00ff64, 1.5, 8);
-        fillLight.position.set(-3, -1, 2);
-        scene.add(fillLight);
-
-        const backLight = new THREE.PointLight(0x00d9ff, 4, 10);
-        backLight.position.set(0, 3, -4);
-        scene.add(backLight);
 
         window.addEventListener('resize', onWindowResize, false);
         document.addEventListener('mousemove', onDocumentMouseMove, false);
+        window.addEventListener('deviceorientation', onDeviceOrientation, false);
     } 
+
+    function buildHelmet() {
+        skullGroup = new THREE.Group();
+
+        const dome = new THREE.Mesh(new THREE.SphereGeometry(1.0, 32, 24), materials.shell);
+        dome.scale.set(1.0, 1.10, 0.94);
+        skullGroup.add(dome);
+
+        const faceMask = new THREE.Mesh(new THREE.SphereGeometry(0.70, 32, 24), materials.panel);
+        faceMask.scale.set(1.10, 1.22, 0.52);
+        faceMask.position.set(0, -0.06, 0.70);
+        skullGroup.add(faceMask);
+
+        const forehead = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.20, 0.32), materials.panel);
+        forehead.position.set(0, 0.60, 0.72);
+        forehead.rotation.x = -0.20;
+        skullGroup.add(forehead);
+
+        const tBar = new THREE.Mesh(new THREE.BoxGeometry(0.10, 0.18, 0.10), materials.accent);
+        tBar.position.set(0, 0.62, 0.84);
+        skullGroup.add(tBar);
+
+        [-1, 1].forEach(function(s) {
+            const brow = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.08, 0.22), materials.shell);
+            brow.position.set(s * 0.27, 0.36, 0.88);
+            brow.rotation.z = s * -0.24;
+            brow.rotation.x = -0.10;
+            skullGroup.add(brow);
+
+            const aura = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.18, 0.03), materials.glow);
+            aura.position.set(s * 0.28, 0.19, 0.92);
+            aura.rotation.z = s * -0.22;
+            aura.rotation.y = s * -0.15;
+            skullGroup.add(aura);
+
+            const eye = new THREE.Mesh(new THREE.BoxGeometry(0.33, 0.095, 0.07), materials.eye);
+            eye.position.set(s * 0.28, 0.19, 0.96);
+            eye.rotation.z = s * -0.22;
+            eye.rotation.y = s * -0.15;
+            skullGroup.add(eye);
+
+            const core = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.042, 0.05), materials.eyeCore);
+            core.position.set(s * 0.28, 0.19, 0.985);
+            core.rotation.z = s * -0.22;
+            core.rotation.y = s * -0.15;
+            skullGroup.add(core);
+
+            const eL = new THREE.PointLight(0x00e8ff, 1.5, 2.5);
+            eL.position.set(s * 0.28, 0.19, 1.1);
+            lights.eyeLights.push(eL);
+            skullGroup.add(eL);
+        });
+
+        const nose = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.30, 0.18), materials.panel);
+        nose.position.set(0, 0.05, 0.95);
+        skullGroup.add(nose);
+
+        [-1, 1].forEach(function(s) {
+            const cheek = new THREE.Mesh(new THREE.SphereGeometry(0.30, 16, 16), materials.panel);
+            cheek.scale.set(0.65, 0.90, 0.52);
+            cheek.position.set(s * 0.72, -0.10, 0.58);
+            cheek.rotation.y = s * -0.42;
+            skullGroup.add(cheek);
+
+            for (let v = 0; v < 3; v++) {
+                const vent = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.022, 0.035), materials.accent);
+                vent.position.set(s * 0.70, 0.04 + v * -0.10, 0.70);
+                vent.rotation.y = s * -0.38;
+                skullGroup.add(vent);
+            }
+        });
+
+        const muzzle = new THREE.Mesh(new THREE.BoxGeometry(0.50, 0.18, 0.26), materials.panel);
+        muzzle.position.set(0, -0.20, 0.88);
+        muzzle.rotation.x = 0.10;
+        skullGroup.add(muzzle);
+
+        [-0.13, 0.13].forEach(function(x) {
+            const ml = new THREE.Mesh(new THREE.BoxGeometry(0.022, 0.14, 0.06), materials.accent);
+            ml.position.set(x, -0.20, 0.96);
+            skullGroup.add(ml);
+        });
+
+        const chin = new THREE.Mesh(new THREE.SphereGeometry(0.36, 24, 20), materials.shell);
+        chin.scale.set(1.02, 0.52, 0.76);
+        chin.position.set(0, -0.66, 0.44);
+        skullGroup.add(chin);
+
+        const chinAccent = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.050, 0.12), materials.accent);
+        chinAccent.position.set(0, -0.55, 0.76);
+        skullGroup.add(chinAccent);
+
+        [-1, 1].forEach(function(s) {
+            const temple = new THREE.Mesh(new THREE.SphereGeometry(0.22, 16, 16), materials.shell);
+            temple.scale.set(0.46, 0.70, 0.50);
+            temple.position.set(s * 0.96, 0.22, 0.16);
+            skullGroup.add(temple);
+
+            const tring = new THREE.Mesh(new THREE.TorusGeometry(0.095, 0.016, 8, 16), materials.accent);
+            tring.position.set(s * 0.98, 0.22, 0.20);
+            tring.rotation.y = Math.PI / 2;
+            skullGroup.add(tring);
+        });
+
+        const divider = new THREE.Mesh(new THREE.BoxGeometry(0.70, 0.016, 0.016), materials.accent);
+        divider.position.set(0, 0.32, 0.92);
+        divider.rotation.x = -0.12;
+        skullGroup.add(divider);
+
+        const crest = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.075, 0.55), materials.accent);
+        crest.position.set(0, 1.02, 0.08);
+        crest.rotation.x = 0.15;
+        skullGroup.add(crest);
+
+        const collar = new THREE.Mesh(new THREE.CylinderGeometry(0.74, 0.70, 0.30, 24), materials.shell);
+        collar.position.set(0, -1.02, 0.0);
+        skullGroup.add(collar);
+
+        scene.add(skullGroup);
+    }
+
+    function setupLighting() {
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        lights.keyLight = new THREE.PointLight(0xffffff, 2.0, 10);
+        lights.keyLight.position.set(3, 2, 3);
+        scene.add(lights.keyLight);
+
+        lights.fillLight = new THREE.PointLight(0x00aacc, 1.5, 8);
+        lights.fillLight.position.set(-3, -1, 2);
+        scene.add(lights.fillLight);
+
+        lights.backLight = new THREE.PointLight(0x0044ff, 3, 10);
+        lights.backLight.position.set(0, 3, -4);
+        scene.add(lights.backLight);
+    }
+
+    function applyThemeColors(theme) {
+        if (theme === 'white') {
+            materials.shell.color.setHex(0xe0e5ec);
+            materials.panel.color.setHex(0xcfd6e0);
+            materials.accent.color.setHex(0x0055ff);
+            materials.accent.emissive.setHex(0x002288);
+            
+            materials.eye.color.setHex(0x0066ff);
+            materials.eyeCore.color.setHex(0xaaddff);
+            materials.glow.color.setHex(0x0044ff);
+
+            lights.eyeLights.forEach(l => l.color.setHex(0x0066ff));
+            lights.fillLight.color.setHex(0x0022aa);
+            lights.backLight.color.setHex(0xaaccff);
+            lights.keyLight.intensity = 1.2; 
+        } else {
+            materials.shell.color.setHex(0x0c1118);
+            materials.panel.color.setHex(0x141c28);
+            materials.accent.color.setHex(0x00aacc);
+            materials.accent.emissive.setHex(0x002233);
+            
+            materials.eye.color.setHex(0x00e8ff);
+            materials.eyeCore.color.setHex(0x88ffff);
+            materials.glow.color.setHex(0x0099cc);
+
+            lights.eyeLights.forEach(l => l.color.setHex(0x00e8ff));
+            lights.fillLight.color.setHex(0x00aacc);
+            lights.backLight.color.setHex(0x0044ff);
+            lights.keyLight.intensity = 2.0; 
+        }
+    }
 
     function onDocumentMouseMove(event) {
         if (window.innerWidth <= 1024) return; 
-
         const windowHalfX = window.innerWidth / 2;
         const windowHalfY = window.innerHeight / 2;
-
         mouseX = (event.clientX - windowHalfX) / windowHalfX;
         mouseY = (event.clientY - windowHalfY) / windowHalfY;
     }
 
     function onDeviceOrientation(event) {
-        if (window.innerWidth > 1024) return; 
-
-        if (event.gamma === null || event.beta === null) return;
-
-        let gamma = event.gamma; 
-        let beta = event.beta;   
-
-        gamma = Math.max(-45, Math.min(45, gamma));
-        beta = Math.max(20, Math.min(70, beta)); 
-
+        if (window.innerWidth > 1024 || event.gamma === null || event.beta === null) return;
+        let gamma = Math.max(-45, Math.min(45, event.gamma));
+        let beta = Math.max(20, Math.min(70, event.beta)); 
         mouseX = gamma / 45;
         mouseY = (beta - 45) / 25;
     }
@@ -515,17 +604,15 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
     function animate() {
         requestAnimationFrame(animate);
 
-        if (activeModel) {
+        if (skullGroup) {
             if (window.innerWidth > 1024) {
                 targetX = mouseX * 0.7;
                 targetY = mouseY * 0.4;
-                activeModel.rotation.y += (targetX - activeModel.rotation.y) * 0.08;
-                activeModel.rotation.x += (targetY - activeModel.rotation.x) * 0.08;
-                
+                skullGroup.rotation.y += (targetX - skullGroup.rotation.y) * 0.08;
+                skullGroup.rotation.x += (targetY - skullGroup.rotation.x) * 0.08;
             } else {
-                activeModel.rotation.x += (0 - activeModel.rotation.x) * 0.05;
-                
-                activeModel.rotation.y += 0.008;
+                skullGroup.rotation.x += (0 - skullGroup.rotation.x) * 0.05;
+                skullGroup.rotation.y += 0.008;
             }
         }
 
@@ -541,73 +628,6 @@ document.addEventListener('DOMContentLoaded', function initTerminalArtBust() {
     init3D();
     animate();
 });
-
-function buildAlienHead() {
-    const group = new THREE.Group();
-
-    const skin    = new THREE.MeshPhongMaterial({ color: 0x1a2840, specular: 0x2a4a6a, shininess: 90 });
-    const eyeMat  = new THREE.MeshPhongMaterial({ color: 0x00e5cc, emissive: 0x00a08a, emissiveIntensity: 1, shininess: 130 });
-    const glowMat = new THREE.MeshBasicMaterial({ color: 0x00e5cc, transparent: true, opacity: 0.35 });
-    const darkMat = new THREE.MeshPhongMaterial({ color: 0x0d1a26 });
-
-    // Cranium
-    const cranium = new THREE.Mesh(new THREE.SphereGeometry(0.52, 40, 40), skin);
-    cranium.scale.set(0.86, 1.42, 0.76);
-    cranium.position.y = 0.12;
-    group.add(cranium);
-
-    // Jaw
-    const jaw = new THREE.Mesh(new THREE.SphereGeometry(0.36, 32, 32), skin);
-    jaw.scale.set(0.82, 0.55, 0.72);
-    jaw.position.y = -0.5;
-    group.add(jaw);
-
-    // Chin
-    const chin = new THREE.Mesh(new THREE.ConeGeometry(0.09, 0.22, 10), skin);
-    chin.position.y = -0.72;
-    chin.rotation.z = Math.PI;
-    group.add(chin);
-
-    // Almond eyes + glow rings
-    [{ x: -0.20, rz: 0.28 }, { x: 0.20, rz: -0.28 }].forEach(function({ x, rz }) {
-        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.13, 24, 24), eyeMat);
-        eye.scale.set(1.75, 0.8, 0.32);
-        eye.position.set(x, 0.10, 0.44);
-        eye.rotation.z = rz;
-        group.add(eye);
-
-        const ring = new THREE.Mesh(new THREE.TorusGeometry(0.12, 0.025, 8, 24), glowMat);
-        ring.scale.set(1.9, 0.88, 1);
-        ring.position.set(x, 0.10, 0.43);
-        ring.rotation.z = rz;
-        group.add(ring);
-    });
-
-    // Cranial ridges
-    for (let i = 0; i < 5; i++) {
-        const ridge = new THREE.Mesh(new THREE.SphereGeometry(0.055, 10, 10), skin);
-        ridge.scale.set(0.55, 1.4, 0.55);
-        ridge.position.set((i - 2) * 0.12, 0.70, 0.02);
-        group.add(ridge);
-    }
-
-    // Nostrils
-    [-0.06, 0.06].forEach(function(x) {
-        const nostril = new THREE.Mesh(new THREE.SphereGeometry(0.028, 8, 8), darkMat);
-        nostril.scale.set(0.6, 0.4, 0.5);
-        nostril.position.set(x, -0.22, 0.43);
-        group.add(nostril);
-    });
-
-    // Eye glow lights
-    [-0.20, 0.20].forEach(function(x) {
-        const light = new THREE.PointLight(0x00e5cc, 0.6, 1.2);
-        light.position.set(x, 0.10, 0.6);
-        group.add(light);
-    });
-
-    return group;
-}
 
 document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contactForm');
@@ -711,4 +731,4 @@ window.addEventListener('beforeunload', () => {
         container.style.display = 'none'; 
         container.style.visibility = 'hidden';
     }
-});
+}); 
